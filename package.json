@@ -7,6 +7,8 @@
     "security:audit": "node scripts/security-audit.mjs",
     "security:install-hooks": "node scripts/install-security-hooks.mjs",
     "security:full-check": "npm run security:validate && npm run security:scan && npm run security:audit",
+    "1password:migrate": "node scripts/1password-migrate.mjs",
+    "1password:test": "op run --env-file=.env.1password -- env | grep -E '(AGENTMAIL|GITHUB|BROWSER_USE)'",
     "precommit": "node scripts/security-scan.mjs --staged --strict",
     "prepush": "node scripts/security-scan.mjs --strict"
   },

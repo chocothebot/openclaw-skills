@@ -47,6 +47,8 @@ Credentials are stored securely in `.secrets/` directory:
    - **Upload CSV file** (max 10MB, supports CSV format)
    - **Click "Import" button** (purple button in modal)
    - Verify import completion and success message
+   
+   **📸 Visual Guide:** See [strackr_ui_guide.md](strackr_ui_guide.md) for screenshots of exact UI workflow
 
 ## Scheduling
 

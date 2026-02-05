@@ -117,8 +117,9 @@ This shows:
 
 ## References
 
-For detailed setup information, account configuration, and advanced troubleshooting:
+For detailed setup information, account configuration, and troubleshooting:
 - **Setup Guide:** See [setup_guide.md](references/setup_guide.md)
+- **Strackr UI Guide:** See [strackr_ui_guide.md](references/strackr_ui_guide.md) - Visual workflow with screenshots
 
 ## Security
 

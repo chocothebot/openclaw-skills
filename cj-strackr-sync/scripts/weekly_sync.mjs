@@ -149,7 +149,7 @@ async function importToStrackr(client, credentials, csvFilename) {
    - Note any success/error messages
    - Confirm click data now shows in dashboard
 
-Note: Complete workflow verified from Strackr UI screenshots.`,
+Note: Complete workflow verified from Strackr UI screenshots (see references/strackr_ui_guide.md).`,
   });
 
   const result = await task.complete();

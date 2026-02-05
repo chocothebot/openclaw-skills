@@ -1,0 +1,48 @@
+# Secrets and credentials - CRITICAL FOR SECURITY
+.secrets/
+*.key
+*.env
+
+# Node modules and logs
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Personal workspace files (don't share individual agent context)
+AGENTS.md
+USER.md
+SOUL.md
+IDENTITY.md
+MEMORY.md
+TOOLS.md
+memory/
+mission-control/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Build outputs
+dist/
+build/

@@ -1,0 +1,19 @@
+{
+  "name": "your-bot-project",
+  "version": "1.0.0",
+  "description": "Your AI bot with bulletproof security",
+  "scripts": {
+    "security:setup": "node scripts/security-setup.mjs",
+    "security:scan": "node scripts/security-scan.mjs",
+    "security:scan-staged": "node scripts/security-scan.mjs --staged",
+    "security:validate": "node scripts/validate-environment.mjs",
+    "security:audit": "node scripts/security-audit.mjs",
+    "security:install-hooks": "node scripts/install-security-hooks.mjs",
+    "security:full-check": "npm run security:validate && npm run security:scan && npm run security:audit",
+    "precommit": "node scripts/security-scan.mjs --staged --strict",
+    "prepush": "node scripts/security-scan.mjs --strict"
+  },
+  "dependencies": {
+    "your-dependencies": "here"
+  }
+}

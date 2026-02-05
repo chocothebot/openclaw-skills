@@ -74,7 +74,6 @@ const WHITELISTED_FILES = {
     'tests/': ['Hardcoded Secret/Token', 'Hardcoded Password'], // Test directories  
     'package.json': ['Email Address'], // Author email in package.json
     'cj-strackr-sync/': ['Email Address'], // Service documentation
-    'SKILL.md': ['Email Address', 'Hardcoded Password', 'Hardcoded Secret/Token'], // Skill documentation examples
 };
 
 class SecurityScanner {

@@ -9,16 +9,21 @@ Automates the weekly process of exporting click statistics from CJ Affiliate and
 
 ## Quick Start
 
-Run the weekly sync automation:
+**IMPORTANT: Always run the complete workflow, not individual steps!**
 
 ```bash
+# Run the complete end-to-end sync
 node scripts/weekly_sync.mjs
+
+# Check status and monitor progress  
+node scripts/check_status.mjs
 ```
 
 The automation will:
-1. Export click data from CJ Affiliate (last 7 days by default)
-2. Import the CSV file into Strackr
-3. Verify the import completed successfully
+1. **Export** click data from CJ Affiliate (last 7 days by default)
+2. **Import** the CSV file into Strackr  
+3. **Verify** both steps completed successfully
+4. **Log** detailed status for monitoring
 
 ## Custom Date Range
 
@@ -67,9 +72,33 @@ Ensure these files exist with valid credentials:
 - Uploads the exported CSV file
 - Verifies import completion and record count
 
+## Monitoring & Status
+
+**Check sync status anytime:**
+```bash
+node scripts/check_status.mjs
+```
+
+This shows:
+- Overall sync status (completed/failed/in progress)
+- Step-by-step progress 
+- Detailed error messages if any
+- Next recommended actions
+
+**Status file location:** `.secrets/cj-strackr-status.json`
+
 ## Troubleshooting
 
-Common issues and solutions:
+### ⚠️ CRITICAL: Avoid Process Fragmentation
+
+**❌ NEVER run individual export/import scripts separately**  
+**✅ ALWAYS run the complete workflow: `node scripts/weekly_sync.mjs`**
+
+**Common mistake:** Running separate export scripts without completing import.  
+**Result:** CJ data exported but never imported to Strackr → Click data stays at 0.  
+**Fix:** Always use the complete workflow and check status afterward.
+
+### Other Common Issues
 
 **Export Failures:**
 - Check CJ credentials in `.secrets/cj-affiliate.env`
@@ -84,7 +113,7 @@ Common issues and solutions:
 **Automation Issues:**
 - Check Browser-Use API key in `.secrets/browser-use.env`
 - Verify sufficient API credits remain
-- Try manual run first to isolate issues
+- Use `check_status.mjs` to see exactly where it failed
 
 ## References
 

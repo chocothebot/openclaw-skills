@@ -10,7 +10,7 @@
  */
 
 import { BrowserUseClient } from "browser-use-sdk";
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 // Load API key
 function loadApiKey() {
@@ -143,6 +143,46 @@ Note: This completes the weekly CJ→Strackr sync process.`,
   return result;
 }
 
+// Status tracking
+async function updateStatus(step, status, details = {}) {
+  const statusFile = '.secrets/cj-strackr-status.json';
+  const timestamp = new Date().toISOString();
+  
+  let statusData = {};
+  try {
+    statusData = JSON.parse(readFileSync(statusFile, 'utf8'));
+  } catch (e) {
+    // File doesn't exist yet, start fresh
+  }
+  
+  statusData.lastRun = timestamp;
+  statusData[step] = { status, timestamp, ...details };
+  
+  try {
+    writeFileSync(statusFile, JSON.stringify(statusData, null, 2));
+    console.log(`📊 Status Updated: ${step} = ${status}`);
+  } catch (error) {
+    console.warn(`⚠️ Could not write status file: ${error.message}`);
+  }
+}
+
+async function logStep(stepNumber, description, action) {
+  console.log(`\n🔄 Step ${stepNumber}: ${description}`);
+  console.log("─".repeat(50));
+  
+  try {
+    await updateStatus(`step${stepNumber}`, 'in_progress', { description });
+    const result = await action();
+    await updateStatus(`step${stepNumber}`, 'completed', { description });
+    console.log(`✅ Step ${stepNumber} completed successfully`);
+    return result;
+  } catch (error) {
+    await updateStatus(`step${stepNumber}`, 'failed', { description, error: error.message });
+    console.error(`❌ Step ${stepNumber} failed: ${error.message}`);
+    throw error;
+  }
+}
+
 async function main() {
   try {
     console.log("🚀 Starting CJ → Strackr Weekly Sync");
@@ -153,13 +193,16 @@ async function main() {
     const dateRange = getDateRange();
     
     console.log(`📅 Sync Period: ${dateRange.startDate} to ${dateRange.endDate}`);
+    await updateStatus('sync', 'started', { dateRange });
     
     const client = new BrowserUseClient({ apiKey });
     
     // Step 1: Export from CJ
-    const exportResult = await exportFromCJ(client, credentials, dateRange);
+    const exportResult = await logStep(1, "Export click data from CJ Affiliate", async () => {
+      return await exportFromCJ(client, credentials, dateRange);
+    });
     
-    // Extract CSV filename from result (you may need to parse this based on actual response)
+    // Extract CSV filename from result
     const csvFilename = extractFilename(exportResult.output);
     
     if (!csvFilename) {
@@ -167,19 +210,32 @@ async function main() {
     }
     
     console.log(`📄 CSV File: ${csvFilename}`);
+    await updateStatus('export', 'completed', { csvFilename });
     
     // Step 2: Import to Strackr  
-    const importResult = await importToStrackr(client, credentials, csvFilename);
+    const importResult = await logStep(2, "Import click data to Strackr", async () => {
+      return await importToStrackr(client, credentials, csvFilename);
+    });
     
-    console.log("🎉 Weekly sync completed successfully!");
+    await updateStatus('import', 'completed', { importResult: importResult.output });
+    await updateStatus('sync', 'completed', { 
+      dateRange, 
+      csvFilename, 
+      summary: "Both export and import completed successfully" 
+    });
+    
+    console.log("\n🎉 Weekly sync completed successfully!");
     console.log("=====================================");
     console.log("Summary:");
     console.log(`- Period: ${dateRange.startDate} to ${dateRange.endDate}`);
     console.log(`- CJ Export: ${csvFilename}`);
     console.log(`- Strackr Import: Completed`);
+    console.log(`- Status File: .secrets/cj-strackr-status.json`);
     
   } catch (error) {
+    await updateStatus('sync', 'failed', { error: error.message });
     console.error("❌ Weekly sync failed:", error.message);
+    console.error("📊 Check .secrets/cj-strackr-status.json for detailed status");
     process.exit(1);
   }
 }

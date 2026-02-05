@@ -1,0 +1,33 @@
+# Secrets and credentials
+.secrets/
+*.key
+*.env
+
+# Node modules and logs
+node_modules/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Personal workspace files (don't share individual agent context)
+AGENTS.md
+USER.md
+SOUL.md
+IDENTITY.md
+MEMORY.md
+TOOLS.md
+memory/
+mission-control/
+
+# Temporary files
+*.tmp
+*.temp

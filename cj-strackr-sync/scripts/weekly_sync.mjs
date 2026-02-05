@@ -118,24 +118,38 @@ async function importToStrackr(client, credentials, csvFilename) {
   console.log("📈 Step 2: Importing click data to Strackr...");
   
   const task = await client.tasks.createTask({
-    task: `Import the CJ click statistics to Strackr:
+    task: `Import CJ Affiliate click statistics to Strackr - COMPLETE WORKFLOW:
 
-1. Go to Strackr.com and login:
+1. LOGIN:
+   - Go to https://strackr.com and login
    - Email: ${credentials.strackr.email}
    - Password: ${credentials.strackr.password}
 
-2. Navigate to the CJ Affiliate integration section
+2. NAVIGATE TO IMPORT PAGE:
+   - Go directly to: https://app.strackr.com/connections/importdata
 
-3. Find the click import/upload feature (follow their documentation for importing clicks)
+3. FIND CJ ROW AND CLICK UPLOAD:
+   - Look for the table with connections
+   - Find the row with "CJ" (Network: CJ Affiliate)
+   - In the Actions column for the CJ row, click the "Upload" button
 
-4. Upload the CSV file: ${csvFilename}
+4. MODAL DIALOG WILL OPEN:
+   - Title: "Import data for CJ"
+   - File upload area says "Choose a file or drag it here"
+   - Supported types: XLS, ZIP, XLSX, CSV (our files are CSV)
+   - Max size: 10 MB
 
-5. Verify the import completed successfully and return confirmation with:
-   - Number of records imported
-   - Date range covered
-   - Any warnings or errors
+5. UPLOAD CSV FILE:
+   - Upload the CSV file: ${csvFilename}
+   - After selecting file, click the "Import" button (purple button)
 
-Note: This completes the weekly CJ→Strackr sync process.`,
+6. VERIFY AND REPORT:
+   - Wait for import completion
+   - Report number of records imported
+   - Note any success/error messages
+   - Confirm click data now shows in dashboard
+
+Note: Complete workflow verified from Strackr UI screenshots.`,
   });
 
   const result = await task.complete();

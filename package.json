@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "agentmail": "^0.2.11",
+    "browser-use-sdk": "^2.0.14"
+  }
+}

@@ -37,11 +37,16 @@ Credentials are stored securely in `.secrets/` directory:
    - Set date range (default: last 7 days)
    - Export CSV file
 
-2. **Strackr Import**
+2. **Strackr Import** 
    - Login to Strackr with automation account
-   - Navigate to CJ integration section
-   - Upload the exported CSV file
-   - Verify import completion
+   - Navigate to: https://app.strackr.com/connections/importdata
+   - Find "CJ" row (CJ Affiliate network)
+   - Click "Upload" button in Actions column
+   - **Modal opens:** "Import data for CJ" 
+   - **File upload area:** "Choose a file or drag it here"
+   - **Upload CSV file** (max 10MB, supports CSV format)
+   - **Click "Import" button** (purple button in modal)
+   - Verify import completion and success message
 
 ## Scheduling
 

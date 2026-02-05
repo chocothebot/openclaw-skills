@@ -25,6 +25,7 @@ const CREDENTIAL_PATTERNS = [
     { pattern: /sk-[a-zA-Z0-9]{48}/, name: 'OpenAI API Key' },
     { pattern: /bu_[a-zA-Z0-9_]{30,}/, name: 'Browser-Use API Key' },
     { pattern: /ghp_[a-zA-Z0-9]{36}/, name: 'GitHub Personal Access Token' },
+    { pattern: /am_[a-fA-F0-9]{64}/, name: 'Agentmail API Key' },
     { pattern: /xoxb-[0-9]{13}-[0-9]{13}-[a-zA-Z0-9]{24}/, name: 'Slack Bot Token' },
     { pattern: /AKIA[0-9A-Z]{16}/, name: 'AWS Access Key' },
     { pattern: /AIza[0-9A-Za-z\\-_]{35}/, name: 'Google API Key' },
